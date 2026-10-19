@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registar - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Criar conta</h1>
+  <div id="mensagem" class="flash" style="display:none"></div>
+
+  <form class="form-auth" id="form-registo">
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" required>
+    <label for="password">Palavra-passe</label>
+    <input type="password" id="password" required minlength="6">
+    <label for="plano_id">Plano (opcional)</label>
+    <select id="plano_id">
+      <option value="">Escolher mais tarde</option>
+    </select>
+    <button type="submit" class="btn-primary">Criar conta</button>
+  </form>
+  <p>Já tens conta? <a href="login.html">Inicia sessão</a></p>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script>
+  async function carregarPlanosNoSelect() {
+    try {
+      const planos = await apiFetch("/planos");
+      const select = document.getElementById("plano_id");
+      planos.forEach((p) => {
+        const option = document.createElement("option");
+        option.value = p.id;
+        option.textContent = `${p.nome} - ${p.preco.toFixed(2)} €`;
+        select.appendChild(option);
+      });
+    } catch (erro) {
+      console.error(erro);
+    }
+  }
+
+  document.getElementById("form-registo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nome = document.getElementById("nome").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const plano_id = document.getElementById("plano_id").value || null;
+
+    try {
+      await apiFetch("/registo", {
+        method: "POST",
+        body: JSON.stringify({ nome, email, password, plano_id }),
+      });
+      window.location.href = "login.html";
+    } catch (erro) {
+      mostrarMensagem(erro.message, "erro");
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", carregarPlanosNoSelect);
+</script>
+</body>
+</html>

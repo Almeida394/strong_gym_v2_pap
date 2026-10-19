@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O meu perfil - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>O meu perfil</h1>
+  <div class="card" id="dados-perfil">A carregar...</div>
+
+  <h2>Histórico de aulas marcadas</h2>
+  <div class="lista-aulas" id="historico"></div>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script>
+  async function carregarPerfil() {
+    if (!getToken()) {
+      window.location.href = "login.html";
+      return;
+    }
+    try {
+      const perfil = await apiFetch("/perfil");
+
+      document.getElementById("dados-perfil").innerHTML = `
+        <p><strong>Nome:</strong> ${perfil.nome}</p>
+        <p><strong>Email:</strong> ${perfil.email}</p>
+        <p><strong>Plano:</strong> ${perfil.plano ? perfil.plano.nome : "Nenhum plano escolhido"}</p>
+      `;
+
+      const historico = document.getElementById("historico");
+      if (perfil.historico.length === 0) {
+        historico.innerHTML = "<p>Ainda não marcaste nenhuma aula.</p>";
+      } else {
+        historico.innerHTML = perfil.historico.map((h) => `
+          <div class="card aula-card">
+            <div>
+              <h3>${h.nome}</h3>
+              <p class="meta">${h.dia_semana} · ${h.horario} · marcado em ${h.data_marcacao}</p>
+            </div>
+          </div>
+        `).join("");
+      }
+    } catch (erro) {
+      document.getElementById("dados-perfil").textContent = "Erro: " + erro.message;
+    }
+  }
+  document.addEventListener("DOMContentLoaded", carregarPerfil);
+</script>
+</body>
+</html>

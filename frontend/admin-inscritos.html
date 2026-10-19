@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inscritos - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <h1 id="titulo">Inscritos</h1>
+  <table class="admin-table">
+    <thead><tr><th>Nome</th><th>Email</th><th>Data da marcação</th></tr></thead>
+    <tbody id="tabela-inscritos"><tr><td colspan="3">A carregar...</td></tr></tbody>
+  </table>
+  <p><a href="admin.html">&larr; Voltar ao painel</a></p>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script>
+  async function carregarInscritos() {
+    if (!getToken() || !isAdmin()) {
+      window.location.href = "index.html";
+      return;
+    }
+    const id = new URLSearchParams(window.location.search).get("id");
+    try {
+      const dados = await apiFetch(`/admin/aulas/${id}/inscritos`);
+      document.getElementById("titulo").textContent = `Inscritos em "${dados.aula.nome}"`;
+
+      const corpo = document.getElementById("tabela-inscritos");
+      if (dados.inscritos.length === 0) {
+        corpo.innerHTML = '<tr><td colspan="3">Ainda ninguém se inscreveu.</td></tr>';
+      } else {
+        corpo.innerHTML = dados.inscritos.map((i) => `
+          <tr><td>${i.nome}</td><td>${i.email}</td><td>${i.data_marcacao}</td></tr>
+        `).join("");
+      }
+    } catch (erro) {
+      document.getElementById("tabela-inscritos").innerHTML =
+        `<tr><td colspan="3">Erro: ${erro.message}</td></tr>`;
+    }
+  }
+  document.addEventListener("DOMContentLoaded", carregarInscritos);
+</script>
+</body>
+</html>

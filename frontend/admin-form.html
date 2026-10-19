@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <h1 id="titulo-form">Nova aula</h1>
+  <div id="mensagem" class="flash" style="display:none"></div>
+
+  <form class="form-auth" id="form-aula">
+    <label for="nome">Nome da aula</label>
+    <input type="text" id="nome" required>
+    <label for="tipo">Tipo</label>
+    <input type="text" id="tipo" required placeholder="ex: Cardio, Funcional, Musculação">
+    <label for="instrutor">Instrutor</label>
+    <input type="text" id="instrutor" required>
+    <label for="sala">Sala</label>
+    <input type="text" id="sala" required>
+    <label for="dia_semana">Dia da semana</label>
+    <input type="text" id="dia_semana" required>
+    <label for="horario">Horário</label>
+    <input type="text" id="horario" required placeholder="ex: 18:30">
+    <label for="vagas_totais">Vagas totais</label>
+    <input type="number" id="vagas_totais" min="1" value="10" required>
+    <button type="submit" class="btn-primary">Guardar</button>
+  </form>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script src="js/admin-form.js"></script>
+</body>
+</html>

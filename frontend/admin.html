@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <div class="admin-header">
+    <h1>Painel de administrador</h1>
+    <a href="admin-form.html" class="btn-primary">+ Nova aula</a>
+  </div>
+  <div id="mensagem" class="flash" style="display:none"></div>
+
+  <table class="admin-table">
+    <thead>
+      <tr><th>Nome</th><th>Tipo</th><th>Dia</th><th>Horário</th><th>Vagas</th><th>Ações</th></tr>
+    </thead>
+    <tbody id="tabela-aulas">
+      <tr><td colspan="6">A carregar...</td></tr>
+    </tbody>
+  </table>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

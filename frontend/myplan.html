@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MyPlan - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <span class="eyebrow">Um plano à tua medida</span>
+  <h1>MyPlan</h1>
+  <p class="subtitle">Partilha os teus dados e recebe uma sugestão inicial de treino e nutrição.</p>
+  <div id="mensagem" class="flash" style="display:none" role="alert"></div>
+
+  <div class="myplan-layout">
+    <form class="form-auth card" id="form-myplan">
+      <h2>Os teus dados</h2>
+      <label for="altura">Altura (cm)</label>
+      <input id="altura" name="altura" type="number" min="100" max="250" step="1" required>
+
+      <label for="peso">Peso (kg)</label>
+      <input id="peso" name="peso" type="number" min="30" max="300" step="0.1" required>
+
+      <label for="objetivo">Objetivo</label>
+      <select id="objetivo" name="objetivo" required>
+        <option value="perder_peso">Perder peso</option>
+        <option value="manter_forma">Manter forma</option>
+        <option value="ganhar_massa_muscular">Ganhar massa muscular</option>
+      </select>
+
+      <label for="dias">Dias de treino por semana</label>
+      <select id="dias" name="dias" required>
+        <option value="1">1 dia</option>
+        <option value="2">2 dias</option>
+        <option value="3" selected>3 dias</option>
+        <option value="4">4 dias</option>
+        <option value="5">5 dias</option>
+        <option value="6">6 dias</option>
+      </select>
+
+      <button class="btn-primary" type="submit">Gerar o meu plano</button>
+      <p class="hint">As sugestões são estimativas gerais e não substituem aconselhamento profissional.</p>
+    </form>
+
+    <section class="myplan-result" id="resultado-myplan" aria-live="polite" hidden>
+      <article class="card">
+        <h2>Treino</h2>
+        <ul class="plan-days" id="plano-treino"></ul>
+      </article>
+      <article class="card">
+        <h2>Nutrição</h2>
+        <div class="nutrition-grid">
+          <div class="nutrition-stat">
+            <strong id="calorias-diarias"></strong>
+            <span>calorias estimadas / dia</span>
+          </div>
+          <div class="nutrition-stat">
+            <strong id="proteina-diaria"></strong>
+            <span>proteína estimada / dia</span>
+          </div>
+        </div>
+        <p class="result-note" id="nota-nutricao"></p>
+      </article>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script src="js/myplan.js"></script>
+</body>
+</html>

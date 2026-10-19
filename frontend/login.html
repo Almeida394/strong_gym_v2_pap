@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Entrar</h1>
+  <div id="mensagem" class="flash" style="display:none"></div>
+
+  <form class="form-auth" id="form-login">
+    <label for="email">Email</label>
+    <input type="email" id="email" required>
+    <label for="password">Palavra-passe</label>
+    <input type="password" id="password" required>
+    <button type="submit" class="btn-primary">Entrar</button>
+  </form>
+  <p>Ainda não tens conta? <a href="registo.html">Regista-te</a></p>
+  <p class="hint">Conta de admin de exemplo: admin@stronggym.pt / admin123</p>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script>
+  document.getElementById("form-login").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      const resultado = await apiFetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      guardarSessao(resultado.token, resultado.nome, resultado.is_admin);
+      window.location.href = "index.html";
+    } catch (erro) {
+      mostrarMensagem(erro.message, "erro");
+    }
+  });
+</script>
+</body>
+</html>

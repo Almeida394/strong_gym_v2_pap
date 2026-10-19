@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planos - Strong Gym</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="logo">Strong Gym</a>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="planos.html">Planos</a>
+    <span id="navbar-sessao"></span>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Planos e mensalidades</h1>
+  <div class="lista-planos" id="lista-planos">
+    <p>A carregar...</p>
+  </div>
+</main>
+
+<footer class="footer">Strong Gym — projeto de aprendizagem (PAP)</footer>
+
+<script src="js/api.js"></script>
+<script>
+  async function carregarPlanos() {
+    try {
+      const planos = await apiFetch("/planos");
+      const lista = document.getElementById("lista-planos");
+      lista.innerHTML = planos.map((p) => `
+        <div class="card plano-card">
+          <h3>${p.nome}</h3>
+          <p class="preco">${p.preco.toFixed(2)} €</p>
+          <p>${p.descricao}</p>
+        </div>
+      `).join("");
+    } catch (erro) {
+      document.getElementById("lista-planos").innerHTML = "Erro a carregar planos.";
+    }
+  }
+  document.addEventListener("DOMContentLoaded", carregarPlanos);
+</script>
+</body>
+</html>
