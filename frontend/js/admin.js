@@ -35,7 +35,7 @@ async function carregarAulasAdmin() {
 }
 
 async function apagarAula(id) {
-  if (!confirm("Apagar esta aula?")) return;
+  if (!confirm(traduzir("Apagar esta aula?"))) return;
   try {
     await apiFetch(`/admin/aulas/${id}`, { method: "DELETE" });
     carregarAulasAdmin();

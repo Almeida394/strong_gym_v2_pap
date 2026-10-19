@@ -61,6 +61,11 @@ function montarNavbar() {
       <a href="myplan.html">MyPlan</a>
       ${isAdmin() ? '<a href="admin.html">Admin</a>' : ""}
       <a href="#" id="link-sair">Sair</a>
+      <span class="nav-tools">
+        <button type="button" class="nav-control theme-control" id="alternar-tema"></button>
+        <button type="button" class="nav-control" data-idioma="pt" aria-label="Português">PT</button>
+        <button type="button" class="nav-control" data-idioma="en" aria-label="English">EN</button>
+      </span>
     `;
     document.getElementById("link-sair").addEventListener("click", (e) => {
       e.preventDefault();
@@ -72,14 +77,25 @@ function montarNavbar() {
     area.innerHTML = `
       <a href="login.html">Entrar</a>
       <a href="registo.html" class="btn-nav">Registar</a>
+      <span class="nav-tools">
+        <button type="button" class="nav-control theme-control" id="alternar-tema"></button>
+        <button type="button" class="nav-control" data-idioma="pt" aria-label="Português">PT</button>
+        <button type="button" class="nav-control" data-idioma="en" aria-label="English">EN</button>
+      </span>
     `;
   }
+
+  document.getElementById("alternar-tema").addEventListener("click", alternarTema);
+  document.querySelectorAll("[data-idioma]").forEach((botao) => {
+    botao.addEventListener("click", () => definirIdioma(botao.dataset.idioma));
+  });
+  traduzirPagina();
 }
 
 function mostrarMensagem(texto, tipo = "sucesso") {
   const area = document.getElementById("mensagem");
   if (!area) {
-    alert(texto);
+    alert(traduzir(texto));
     return;
   }
   area.textContent = texto;
